@@ -53,6 +53,14 @@
             <artifactId>springfox-swagger-ui</artifactId>
             <version>3.0.0</version>
         </dependency>
+        <!-- Deploy to nexus-->
+        <distributionManagement>
+            <repository>
+                <id>deploymentRepo</id>
+                <name>Nexus Repository</name>
+                <url>http://localhost:8081/repository/maven-releases/</url>
+            </repository>
+	    </distributionManagement>
 
 
 
@@ -80,16 +88,4 @@
 
         </plugins>
     </build>
-    <!-- Environment Settings-->
-        <!-- Deploy to nexus-->
-        <distributionManagement>
-		<snapshotRepository>
-			<id>nexus-snapshots</id>
-			<url>http://192.168.1.44:8081/repository/maven-snapshots/</url>
-		</snapshotRepository>
-		<repository>
-			<id>nexus-releases</id>
-			<url>http://192.168.1.44:8081/repository/maven-releases/</url>
-		</repository>
-	</distributionManagement>
 </project>
