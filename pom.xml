@@ -83,15 +83,13 @@
     <!-- Environment Settings-->
         <!-- Deploy to nexus-->
         <distributionManagement>
-            <repository>
-                <id>releases</id>
-                <name>releases</name>
-                <url>http://192.168.1.44:8081/repository/maven-releases/</url>
-            </repository>
-            <snapshotRepository>
-                <id>snapshots</id>
-                <name>snapshots</name>
-                <url>http://192.168.1.44:8081/repository/maven-snapshots/</url>
-            </snapshotRepository>
-        </distributionManagement>
+		<snapshotRepository>
+			<id>nexus-snapshots</id>
+			<url>http://192.168.1.44:8081/repository/maven-snapshots/</url>
+		</snapshotRepository>
+		<repository>
+			<id>nexus-releases</id>
+			<url>http://192.168.1.44:8081/repository/maven-releases/</url>
+		</repository>
+	</distributionManagement>
 </project>
