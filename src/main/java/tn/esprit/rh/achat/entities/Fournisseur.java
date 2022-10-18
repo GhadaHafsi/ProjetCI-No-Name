@@ -31,7 +31,7 @@ public class Fournisseur implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idFournisseur;
-	//Add NotBlank comment3
+	//Add NotBlank comment4
 	private String code;
 	private String libelle;
 	@Enumerated(EnumType.STRING)
