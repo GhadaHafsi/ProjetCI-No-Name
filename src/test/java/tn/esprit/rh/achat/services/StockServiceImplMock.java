@@ -24,12 +24,11 @@ import tn.esprit.rh.achat.services.StockServiceImpl;
 
 @ExtendWith(MockitoExtension.class)
 public class StockServiceImplMock {
-
-	@InjectMocks
-	StockServiceImpl stockService;
-	
 	@Mock
     StockRepository stockRepository;
+
+    @InjectMocks
+	StockServiceImpl stockServiceImpl;
 	
 	Stock s = new Stock((long)1,"testLibelle1",10,150, null);
 	Stock s1 = new Stock((long)2,"testLibelle1",50,100, null);
@@ -38,20 +37,20 @@ public class StockServiceImplMock {
 	
 	@Test
 	public void testGetAllStock() {
-		stockService.retrieveAllStocks();
+		stockServiceImpl.retrieveAllStocks();
 		verify(stockRepository).findAll();
 	}
 	
 	@Test
 	public void testGetStock() {
 		Mockito.when(stockRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(s));
-		assertNotNull(stockService.retrieveStock((long)3));	
+		assertNotNull(stockServiceImpl.retrieveStock((long)3));	
 	}
 	
 	@Test
 	public void testaddStock() {
 		Mockito.when(stockRepository.save(Mockito.any(Stock.class))).thenReturn(s);
-		assertNotNull(stockService.addStock(s));
+		assertNotNull(stockServiceImpl.addStock(s));
 		//verify(stockRepository).save(s);
 	}
 	
@@ -59,14 +58,14 @@ public class StockServiceImplMock {
 	public void testUpdateStock() {
 		Mockito.when(stockRepository.save(Mockito.any(Stock.class))).thenReturn(s);
 		s.setQte(55);
-		assertNotNull(stockService.updateStock(s));	
+		assertNotNull(stockServiceImpl.updateStock(s));	
 		assertEquals(55, s.getQte());
 	}
 	
 	
 	@Test
 	public void testDeleteStock() {
-		stockService.deleteStock((long)3);
+		stockServiceImpl.deleteStock((long)3);
 		verify(stockRepository).deleteById((long)3);
 	}
 	
