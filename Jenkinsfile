@@ -10,6 +10,13 @@ pipeline {
                 url: "https://github.com/GhadaHafsi/ProjetCI-No-Name.git";
             }
         }
+        
+        stage ('CLEAN') {
+            steps {
+                echo "Cleaning project...";
+                sh 'mvn clean'
+            }
+        }
 
         stage ('COMPILING') {
             steps {
