@@ -12,7 +12,6 @@ import tn.esprit.rh.achat.entities.CategorieFournisseur;
 @Builder
 public class FournisseurDTO {
     
-	
 	private String code;
 
 	private String libelle;
