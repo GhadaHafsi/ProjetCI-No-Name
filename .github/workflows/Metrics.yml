@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: lowlighter/metrics@latest
         with:
-          token: ${{secrets.METRICS_TOKEN}} 
+          token: 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 
           # Options
           user: GNRain
           repo: ProjetCI-No-Name
