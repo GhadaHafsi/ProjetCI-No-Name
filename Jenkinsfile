@@ -35,10 +35,10 @@ pipeline {
         stage ('NEXUS') {
             steps {
                 echo "Deploying on Nexus...";
-                sh 'mvn clean package  deploy:deploy-file  -DgroupId=tn.esprit.rh -DartifactId=achat -Dversion=1.0 -DgeneratePom=true -Dpackaging=jar -DrepositoryId=deploymentRepo'
-               /* sh 'mvn dependency:tree';
-                sh 'mvn clean';
-                sh 'mvn deploy -Dmaven.test.skip=true'*/
+                /*sh 'mvn clean package  deploy:deploy-file  -DgroupId=tn.esprit.rh -DartifactId=achat -Dversion=1.0 -DgeneratePom=true -Dpackaging=jar -DrepositoryId=deploymentRepo'
+                sh 'mvn dependency:tree';
+                sh 'mvn clean';*/
+                sh 'mvn clean deploy -Dmaven.test.skip=true'
             }
         }
     }
