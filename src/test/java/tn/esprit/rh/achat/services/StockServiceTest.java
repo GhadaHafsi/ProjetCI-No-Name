@@ -1,115 +1,77 @@
 package tn.esprit.rh.achat.services;
 
-import java.util.ArrayList;
+import static org.junit.jupiter.api.Assertions.*;
+
 import java.util.List;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import tn.esprit.rh.achat.entities.Stock;
-import tn.esprit.rh.achat.repositories.StockRepository;
+import tn.esprit.rh.achat.services.IStockService;
 
-@SpringBootTest
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class StockServiceTest {
-	
-	@InjectMocks
-	StockServiceImpl mockAS;
-	@Mock
-	StockRepository mockAR;
-	
+class StockServiceImpTest {
+
 	@Autowired
-	IStockService AS;
-
+	private IStockService stockService;
+	
 	@Test
-	@Order(1)
-	public void retrieveAllStockReturnsEmptyListWhenDbIsEmpty() {
-		List<Stock> listStock = AS.retrieveAllStocks();
-		Assertions.assertEquals(0, listStock.size());
-	}
-
-	/*@Test
-	@Order(2)
-	public void retrieveAllStockMocked() {
-		// create mock list
-		List<Stock> mockedList = new ArrayList<Stock>();
-		mockedList.add(new Stock("1", "food"));
-		mockedList.add(new Stock("2", "sport"));
-		mockedList.add(new Stock("3", "music"));
-
-		Mockito.when(mockAR.findAll()).thenReturn(mockedList);
-		List<Stock> listStock = mockAS.retrieveAllStocks();
-		Assertions.assertEquals(3, listStock.size());
-	}
-
-	@Test
-	@Order(3)
-	public void testAddDeleteRetrieveAllWithDb() {
-		List<Stock> addedStock = new ArrayList<Stock>();
-
-		addedStock.add(AS.addStock(new Stock("1", "food")));
-		addedStock.add(AS.addStock(new Stock("2", "sport")));
-		addedStock.add(AS.addStock(new Stock("3", "music")));
-
-		List<Stock> listStock = AS.retrieveAllStocks();
-		Assertions.assertEquals(3, listStock.size());
-
-		for (int i = 0; i < addedStock.size(); i++) {
-			Stock secteurActivite = addedStock.get(i);
-			AS.deleteStock(secteurActivite.getIdStock());
+	public void testAddStock() {
+		List<Stock> stocks = stockService.retrieveAllStocks();
+		int expected=stocks.size();
+		Stock s = new Stock();
+		s.setLibelleStock("stock test");
+		s.setQte(10);
+		s.setQteMin(100);
+		Stock savedStock= stockService.addStock(s);
+		assertEquals(expected+1, stockService.retrieveAllStocks().size());
+		assertNotNull(savedStock.getLibelleStock());
+		stockService.deleteStock(savedStock.getIdStock());
 		}
-
-		listStock = AS.retrieveAllStocks();
-		Assertions.assertEquals(0, listStock.size());
-	}
-
+	
 	@Test
-	@Order(4)
-	public void testUpdateWithDb() {
-		Stock secteurActivite = AS.addStock(new Stock("1", "food"));
+	public void testGetStock() {
+		Stock s = new Stock();
+		s.setLibelleStock("stock test");
+		s.setQte(10);
+		s.setQteMin(100);
+		Stock savedStock= stockService.addStock(s);
+		Stock getStock = stockService.retrieveStock(savedStock.getIdStock());
+		assertNotNull(getStock.getLibelleStock());
+		assertEquals(savedStock.getIdStock(), getStock.getIdStock());
 		
-		Assertions.assertEquals("1", secteurActivite.getCodeStock());
-		Assertions.assertEquals("food", secteurActivite.getLibelleStock());
-		
-		secteurActivite.setCodeStock("2");
-		secteurActivite.setLibelleStock("sport");
-		
-		Stock updatedStock = AS.updateStock(secteurActivite);
-		
-		Assertions.assertEquals(secteurActivite.getIdStock(), updatedStock.getIdStock());
-		Assertions.assertEquals("2", updatedStock.getCodeStock());
-		Assertions.assertEquals("sport", updatedStock.getLibelleStock());
-		
-		AS.deleteStock(updatedStock.getIdStock());
+		stockService.deleteStock(savedStock.getIdStock());
 	}
 	
 	@Test
-	@Order(5)
-	public void testRetrieveByIdWithDb() {
-		Stock secteurActivite = AS.addStock(new Stock("1", "food"));
+	public void testUpdateStock() {
+		Stock s = new Stock();
+		int expected = 9;
+		s.setLibelleStock("stock test");
+		s.setQte(10);
+		s.setQteMin(100);
+		Stock savedStock= stockService.addStock(s);
 		
-		Stock retrievedStock = AS.retrieveStock(secteurActivite.getIdStock());
+		savedStock.setQte(expected);
+		stockService.updateStock(savedStock);
 		
-		Assertions.assertEquals(secteurActivite.getIdStock(), retrievedStock.getIdStock());
-		Assertions.assertEquals(secteurActivite.getCodeStock(), retrievedStock.getCodeStock());
-		Assertions.assertEquals(secteurActivite.getLibelleStock(), retrievedStock.getLibelleStock());
+		assertEquals(savedStock.getQte(), expected);
 		
-		AS.deleteStock(retrievedStock.getIdStock());
+		stockService.deleteStock(savedStock.getIdStock());
 	}
 	
+	/*
 	@Test
-	@Order(6)
-	public void testRetrieveByIdNullIfNotExistWithDb() {
-		Stock retrievedStock = AS.retrieveStock(5L);
-		
-		Assertions.assertNull(retrievedStock);
-	}*/
+	public void testAddOptimizedStock() {
+		Stock s =  Stock.builder().libelleStock("test stock").qte(50).qteMin(10).build();
+		Stock savedStock = stockService.addStock(s);
+	    assertNotNull(savedStock.getIdStock());
+		assertSame(10, savedStock.getQte());
+		assertTrue(savedStock.getQteMin()>0);
+		stockService.deleteStock(savedStock.getIdStock());
+		}
+		*/
+	
+
+
 }
