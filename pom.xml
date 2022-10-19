@@ -80,5 +80,22 @@
 
         </plugins>
     </build>
-
+    
+    <repositories>
+    <repository>
+      <id>maven-group</id>
+      <url>http://192.168.23.128:8081/repository/maven-group/</url>
+    </repository>
+  </repositories>
+  
+  <distributionManagement>
+    <snapshotRepository>
+      <id>nexus-snapshots</id>
+      <url>http://192.168.23.128:8081/repository/maven-snapshots/</url>
+    </snapshotRepository>
+    <repository>
+      <id>nexus-releases</id>
+      <url>http://192.168.23.128:8081/repository/maven-releases/</url>
+    </repository>
+  </distributionManagement>
 </project>
