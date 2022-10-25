@@ -58,7 +58,7 @@ pipeline {
        stage ('RUN') {
             steps {
                 echo "Running the container...";
-                sh 'docker-compose up -d'
+                sh 'docker-compose up'
             }
         }
     }
