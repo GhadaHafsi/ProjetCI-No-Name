@@ -1,5 +1,9 @@
 pipeline {
-    
+    environment{
+        registry = "ghadahafsi/achat_no-name"
+        registryCredential = 'dockerhub_id'
+        dockerImage = ''
+    }
     agent any
     
     stages {
@@ -33,10 +37,28 @@ pipeline {
             }
         }
         
-        stage ('PULLING JAR') {
+        stage('BUILD IMAGE') {
             steps {
-                echo "Pulling artifact from Nexus...";
-                sh 'wget --user=admin --password=nexus http://192.168.189.129:8081/repository/maven-releases/tn/esprit/rh/achat/1.0/achat-1.0.jar'
+                script {
+                    dockerImage = docker.build registry 
+                }
+            }
+        }
+        
+        stage('DEPLOY TO DOCKER HUB') {
+            steps {
+                script {
+                    docker.withRegistry( '', registryCredential ) {
+                    dockerImage.push()
+                    }
+                }
+            }
+        }
+        
+       stage ('RUN') {
+            steps {
+                echo "Running the container...";
+                sh 'docker-compose up -d'
             }
         }
     }
