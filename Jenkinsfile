@@ -25,20 +25,6 @@ pipeline {
             }
         }
 
-        stage ('SONARQUBE') {
-            steps {
-                echo "Launching static tests...";
-                sh 'mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=sonar'
-            }
-        }
-
-        stage ('JUNIT-MOCKITO') {
-            steps {
-                echo "Launching unitairy tests...";
-                sh 'mvn test'
-            }
-        }
-
         stage ('NEXUS') {
             steps {
                 echo "Deploying on Nexus...";
