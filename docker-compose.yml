@@ -22,3 +22,5 @@ services:
       dockerfile: Dockerfile
     depends_on:
       - mysql-standalone
+volumes:
+  db:
