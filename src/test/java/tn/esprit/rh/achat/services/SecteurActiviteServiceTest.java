@@ -21,12 +21,11 @@ import tn.esprit.rh.achat.repositories.SecteurActiviteRepository;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class SecteurActiviteServiceTest {
 	
-	@InjectMocks
-	SecteurActiviteServiceImpl mockAS;
+	
 	@Mock
 	SecteurActiviteRepository mockAR;
 	
-	@Autowired
+	@InjectMocks
 	ISecteurActiviteService AS;
 
 	@Test
@@ -46,7 +45,7 @@ public class SecteurActiviteServiceTest {
 		mockedList.add(new SecteurActivite("3", "music"));
 
 		Mockito.when(mockAR.findAll()).thenReturn(mockedList);
-		List<SecteurActivite> listSecteurActivite = mockAS.retrieveAllSecteurActivite();
+		List<SecteurActivite> listSecteurActivite = AS.retrieveAllSecteurActivite();
 		Assertions.assertEquals(3, listSecteurActivite.size());
 	}
 
