@@ -14,7 +14,7 @@ services:
      - /home/mysql/data:/var/lib/mysql 
 
   spring_app:
-   image: wupti123/devops:32
+   image: moetezz/moetezrepo:37
    container_name: achat
    ports:
     - 8089:8089
