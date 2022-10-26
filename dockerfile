@@ -1,4 +1,4 @@
-FROM java:8
+FROM openjdk:8
 VOLUME /tmp
 EXPOSE 8089
 ADD Projet-CICD.jar backend.jar
