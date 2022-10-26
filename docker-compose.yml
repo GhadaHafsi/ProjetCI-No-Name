@@ -10,6 +10,8 @@ services:
       - MYSQL_PASSWORD=
     volumes:
       - db:/var/lib/mysql
+    ports:
+      - 3306:3306
   backend:
     image: achat-backend
     container_name: achat-backend
