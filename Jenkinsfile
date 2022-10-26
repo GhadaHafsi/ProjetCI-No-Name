@@ -32,12 +32,7 @@ pipeline {
       		}
     	}
        
-	stage("NEXUS"){
-		steps{
-		 sh 'mvn --batch-mode deploy -DskipTests'
-		}
-		
-	}
+	
 
      	stage('Building image locally') {
           steps {
